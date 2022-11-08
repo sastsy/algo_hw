@@ -8,7 +8,6 @@ int main() {
     std::cin >> n;
 
     for (int i = n; i > 0; --i) {
-        std::cin >> x;
         a.push_back(i);
     }
 
