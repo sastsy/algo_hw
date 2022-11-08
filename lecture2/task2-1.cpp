@@ -49,13 +49,13 @@ int main() {
         std::vector<int> ex2 = shellSort(ex, smoothSeqGenerator(ex.size()));
         auto end1 = std::chrono::steady_clock::now();
         std::chrono::duration<double> elapsed_seconds = end1 - start1;
-        std::cout << "ShellSort on " << i << " is " << elapsed_seconds.count() << " s\n";
+        std::cout << "ShellSort on " << i << " is " << elapsed_seconds.count() << " s.\n";
 
         auto start2 = std::chrono::steady_clock::now();
         std::sort(ex.begin(), ex.end());
         auto end2 = std::chrono::steady_clock::now();
         std::chrono::duration<double> elapsed_seconds2 = end2 - start2;
-        std::cout << "Built-in sort on " << i << " is " << elapsed_seconds2.count() << " s\n";
+        std::cout << "Built-in sort on " << i << " is " << elapsed_seconds2.count() << " s.\n";
     }
     return 0;
 }
