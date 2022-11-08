@@ -10,7 +10,7 @@ int main() {
     std::cin >> q;
 
     std::vector<int> a;
-    std::vector<int> map(k, 0);
+    std::vector<int> map(k + 1, 0);
 
     int x;
     for (int i = 0; i < n; ++i) {
@@ -19,15 +19,15 @@ int main() {
         map[x] += 1;
     }
 
+    for (int i = 1; i <= k; ++i) {
+        map[i] += map[i - 1];
+    }
+
     int l;
     int r;
     for (int i = 0; i < q; ++i) {
         std::cin >> l >> r;
-        int count = 0;
-        for (int j = l; j <= r; ++j) {
-            count += map[j];
-        }
-        std::cout << count << "\n";
+        std::cout << map[r] - map[l] + 1 << "\n";
     }
     return 0;
 }
