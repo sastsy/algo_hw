@@ -7,7 +7,6 @@ int main() {
     int q;
     std::cin >> n;
     std::cin >> k;
-    std::cin >> q;
 
     std::vector<int> a;
     std::vector<int> map(k + 1, 0);
@@ -25,9 +24,11 @@ int main() {
 
     int l;
     int r;
+    std::cin >> q;
     for (int i = 0; i < q; ++i) {
         std::cin >> l >> r;
-        std::cout << map[r] - map[l] + 1 << "\n";
+        if (l > 0) std::cout << map[r] - map[l] + 1 << "\n";
+        else std:: cout << map[r];
     }
     return 0;
 }
