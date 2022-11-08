@@ -44,11 +44,13 @@ int main() {
         for (int j = 0; j < i; ++j) {
             ex.push_back(mt());
         }
+
         auto start1 = std::chrono::steady_clock::now();
         std::vector<int> ex2 = shellSort(ex, smoothSeqGenerator(ex.size()));
         auto end1 = std::chrono::steady_clock::now();
         std::chrono::duration<double> elapsed_seconds = end1 - start1;
         std::cout << "ShellSort on " << i << " is " << elapsed_seconds.count() << " s\n";
+
         auto start2 = std::chrono::steady_clock::now();
         std::sort(ex.begin(), ex.end());
         auto end2 = std::chrono::steady_clock::now();
