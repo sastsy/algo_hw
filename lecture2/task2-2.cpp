@@ -27,7 +27,7 @@ int main() {
     std::cin >> q;
     for (int i = 0; i < q; ++i) {
         std::cin >> l >> r;
-        if (l > 0) std::cout << map[r] - map[l] + 1 << "\n";
+        if (l > 0) std::cout << map[r] - map[l - 1] << "\n";
         else std:: cout << map[r];
     }
     return 0;
