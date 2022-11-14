@@ -40,7 +40,6 @@ void merge(vector<int> &A, int q, int l, int r) {
         ++i;
         ++k;
     }
-
     while (j < n2) {
         A[k] = A2[j];
         ++j;
