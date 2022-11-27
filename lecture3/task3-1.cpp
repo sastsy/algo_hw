@@ -67,17 +67,11 @@ void SubarrayInsertionSort(vector<int> &A, int m) {
 
     for (int curr_size = m; curr_size < A.size(); curr_size *= 2) {
         for (int left_start = 0; left_start < A.size() - 1; left_start += 2 * curr_size) {
-            int mid;
-            left_start + curr_size - 1 > A.size() - 1 ? mid = A.size() - 1 : mid = left_start + curr_size - 1;
-            int right_end;
-            left_start + 2 * curr_size - 1 > A.size() - 1 ? right_end = A.size() - 1 : right_end = left_start + 2 * curr_size - 1;
-
+            int mid = left_start + curr_size - 1 > A.size() - 1 ? A.size() - 1 : left_start + curr_size - 1;
+            int right_end = left_start + 2 * curr_size - 1 > A.size() - 1 ? A.size() - 1 : left_start + 2 * curr_size - 1;
             merge(A, mid, left_start, right_end);
         }
     }
-//    for (int i = m - 1; i <= A.size() - m - 1; i += m) {
-//        merge(A, i, m);
-//    }
 }
 
 vector<int> generateVector(int n) {
