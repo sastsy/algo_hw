@@ -1,15 +1,17 @@
 #include <iostream>
 #include <vector>
 #include <random>
-#include <math.h>
+#include <cmath>
 #include <chrono>
 
 using namespace std;
 
 void generateVector(vector<int> &A, int n) {
-    mt19937 mt(time(nullptr));
+    random_device rd;
+    mt19937 rng(rd());
+    uniform_int_distribution<int> uni(-9999, 9999);
     for (int i = 0; i < n; ++i) {
-        A.push_back(mt() % 10000);
+        A.push_back(uni(rng));
     }
 }
 
@@ -28,7 +30,7 @@ int getDigit(int x, int pos) {
 void radixSort(vector<int> &A, int m, int k) {
     int min = getMax(A); //ищем минимальный элемент в массиве, чтобы прибавить его ко всем числам и сделать их неотрицательными,
     //при этом порядок чисел сохранится прежним
-    for (int pos = 1; pos <= m; ++pos) {
+    for (int pos = 1; pos <= m + 1; ++pos) {
         vector<int> C(k);
         vector<int> B = A;
 
@@ -54,14 +56,14 @@ int main() {
     generateVector(A, 10000000);
     vector<int> B = A;
 
+//    for (int i : A) cout << i << " ";
+//    cout << "\n";
+
     auto start = chrono::steady_clock::now();
     radixSort(A, 4, 10);
     auto end = chrono::steady_clock::now();
     chrono::duration<double> elapsed_seconds = end - start;
     cout << "radix sort is " << elapsed_seconds.count() << "s" << "\n";
-
-    for (int i : A) cout << i << " ";
-    cout << "\n";
 
     auto start2 = chrono::steady_clock::now();
     sort(B.begin(), B.end());
