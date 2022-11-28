@@ -15,19 +15,22 @@ void generateVector(vector<int> &A, int n) {
 void heapify(vector<int> &A, int k) {
     int max;
     int j;
-    for (int i = ((k + 1) / 2) - 1; i >= 0; --i) {
+    for (int i = (k + 2) / 3 - 1; i >= 0; --i) {
         j = i;
-        max = j * 2 + 1;
-        while (j * 2 + 1 <= k && A[j] < A[max]) {
-            if (j * 2 + 2 <= k && A[j * 2 + 2] > A[j * 2 + 1]) {
-                max = j * 2 + 2;
+        max = j * 3 + 1;
+        while (j * 3 + 1 <= k && A[j] < A[max]) {
+            if (j * 3 + 3 <= k && A[j * 3 + 3] > A[j * 3 + 2] && A[j * 3 + 3] > A[j * 3 + 1]) {
+                max = j * 3 + 3;
+            }
+            else if (j * 3 + 2 <= k && A[j * 3 + 2] > A[j * 3 + 3] && A[j * 3 + 2] > A[j * 3 + 1]) {
+                max = j * 3 + 2;
             }
             else {
-                max = j * 2 + 1;
+                max = j * 3 + 1;
             }
             swap(A[j], A[max]);
             j = max;
-            max = j * 2 + 1;
+            max = j * 3 + 1;
         }
     }
 }
@@ -42,7 +45,7 @@ void heapSort(vector<int> &A) {
 int main() {
     vector<int> A;
     vector<int> B;
-    generateVector(A, 10000000);
+    generateVector(A, 100000);
     B = A;
 
     auto start1 = chrono::steady_clock::now();
@@ -59,5 +62,4 @@ int main() {
     chrono::duration<double> elapsed_seconds2 = end2 - start2;
     cout << "STD sort is " << elapsed_seconds2.count() << "s";
 //    for (int i : A) cout << i << " ";
-
 }
