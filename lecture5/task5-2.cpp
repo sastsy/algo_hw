@@ -12,40 +12,53 @@ void generateVector(vector<int> &A, int n) {
     }
 }
 
-void heapify(vector<int> &A, int k) {
-    int max;
-    int j;
-    for (int i = (k + 2) / 3 - 1; i >= 0; --i) {
-        j = i;
-        max = j * 3 + 1;
-        while (j * 3 + 1 <= k && A[j] < A[max]) {
-            if (j * 3 + 3 <= k && A[j * 3 + 3] > A[j * 3 + 2] && A[j * 3 + 3] > A[j * 3 + 1]) {
-                max = j * 3 + 3;
-            }
-            else if (j * 3 + 2 <= k && A[j * 3 + 2] > A[j * 3 + 3] && A[j * 3 + 2] > A[j * 3 + 1]) {
-                max = j * 3 + 2;
-            }
-            else {
-                max = j * 3 + 1;
-            }
-            swap(A[j], A[max]);
-            j = max;
-            max = j * 3 + 1;
+void heapify(vector<int> &A, int i, int len) {
+    bool done = false;
+    while (!done) {
+        int max = i;
+        int l = 3 * i + 1;
+        int mid = 3 * i + 2;
+        int r = 3 * i + 3;
+
+        if (l < len && A[max] < A[l]) {
+            max = l;
         }
+        if (mid < len && A[max] < A[mid]) {
+            max = mid;
+        }
+        if (r < len && A[max] < A[r]) {
+            max = r;
+        }
+
+        if (max == i) {
+            done = true;
+        }
+
+        swap(A[max], A[i]);
+        i = max;
+    }
+}
+
+void buildHeap(vector<int> &A) {
+    for (int i = (A.size() + 2) / 3 - 1; i >= 0; --i) {
+        heapify(A, i, A.size());
     }
 }
 
 void heapSort(vector<int> &A) {
+    int len = A.size();
+    buildHeap(A);
     for (int k = A.size() - 1; k > 0; --k) {
-        heapify(A, k);
         swap(A[0], A[k]);
+        --len;
+        heapify(A, 0, len);
     }
 }
 
 int main() {
     vector<int> A;
     vector<int> B;
-    generateVector(A, 100000);
+    generateVector(A, 10000000);
     B = A;
 
     auto start1 = chrono::steady_clock::now();
@@ -61,5 +74,4 @@ int main() {
     auto end2 = chrono::steady_clock::now();
     chrono::duration<double> elapsed_seconds2 = end2 - start2;
     cout << "STD sort is " << elapsed_seconds2.count() << "s";
-//    for (int i : A) cout << i << " ";
 }

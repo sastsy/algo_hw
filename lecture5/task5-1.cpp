@@ -34,7 +34,7 @@ void heapify(vector<int> &A, int i, int len) {
 }
 
 void buildHeap(vector<int> &A) {
-    for (int i = (A.size() + 1) / 2; i >= 0; --i) {
+    for (int i = (A.size() + 1) / 2 - 1; i >= 0; --i) {
         heapify(A, i, A.size());
     }
 }
