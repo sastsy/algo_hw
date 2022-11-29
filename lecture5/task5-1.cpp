@@ -1,7 +1,3 @@
-//Почему-то на 10^4 элементов эта сортировка не превосходит 1с,
-//Но на 10^5 выполняется уже очень долго — больше 10с
-
-
 #include <iostream>
 #include <vector>
 #include <random>
@@ -16,30 +12,40 @@ void generateVector(vector<int> &A, int n) {
     }
 }
 
-void heapify(vector<int> &A, int k) {
-    int max;
-    int j;
-    for (int i = ((k + 1) / 2) - 1; i >= 0; --i) {
-        j = i;
-        max = j * 2 + 1;
-        while (j * 2 + 1 <= k && A[j] < A[max]) {
-            if (j * 2 + 2 <= k && A[j * 2 + 2] > A[j * 2 + 1]) {
-                max = j * 2 + 2;
-            }
-            else {
-                max = j * 2 + 1;
-            }
-            swap(A[j], A[max]);
-            j = max;
-            max = j * 2 + 1;
+void heapify(vector<int> &A, int i, int len) {
+    bool done = false;
+    while (!done) {
+        int max = i;
+        int l = 2 * i + 1;
+        int r = 2 * i + 2;
+
+        if (l < len && A[max] < A[l]) {
+            max = l;
         }
+        if (r < len && A[max] < A[r]) {
+            max = r;
+        }
+        if (max == i) {
+            done = true;
+        }
+        swap(A[max], A[i]);
+        i = max;
+    }
+}
+
+void buildHeap(vector<int> &A) {
+    for (int i = (A.size() + 1) / 2; i >= 0; --i) {
+        heapify(A, i, A.size());
     }
 }
 
 void heapSort(vector<int> &A) {
+    int len = A.size();
+    buildHeap(A);
     for (int k = A.size() - 1; k > 0; --k) {
-        heapify(A, k);
         swap(A[0], A[k]);
+        --len;
+        heapify(A, 0, len);
     }
 }
 
@@ -62,6 +68,4 @@ int main() {
     auto end2 = chrono::steady_clock::now();
     chrono::duration<double> elapsed_seconds2 = end2 - start2;
     cout << "STD sort is " << elapsed_seconds2.count() << "s";
-//    for (int i : A) cout << i << " ";
-
 }
