@@ -1,7 +1,26 @@
 #include <iostream>
 #include <vector>
+#include <random>
+#include <chrono>
 
 using namespace std;
+
+void generateVector(vector<int> &A, int n) {
+    mt19937 mt(time(nullptr));
+    for (int i = 0; i < n; ++i) {
+        A.push_back(mt() % 1000);
+    }
+}
+
+void getTimeSTDSort(vector<int> V) {
+    auto start = chrono::steady_clock::now();
+    sort(V.begin(), V.end());
+    auto end = chrono::steady_clock::now();
+    chrono::duration<double> elapsed_seconds = end - start;
+    cout << "STD sort is " << elapsed_seconds.count() << "s";
+    cout << "\n";
+}
+
 
 int partition(vector<int> &A, int l, int r, int &j, int &i) {
     int x = A[r];
@@ -53,8 +72,27 @@ void quickSort(vector<int> &A, int l, int r) {
     }
 }
 
+void getTimeQuickSort(vector<int> V) {
+    auto start = chrono::steady_clock::now();
+    quickSort(V, 0, V.size() - 1);
+    auto end = chrono::steady_clock::now();
+    chrono::duration<double> elapsed_seconds = end - start;
+    cout << "Quick sort is " << elapsed_seconds.count() << "s";
+    cout << "\n";
+}
+
 int main() {
-    vector<int> A = {4, 9, 4, 4, 1, 9, 4, 4, 9, 4, 4, 1, 4};
-    quickSort(A, 0, A.size() - 1);
-    for (int el : A) cout << el << " ";
+    vector<int> A1;
+    vector<int> A2;
+    generateVector(A1, 10000000);
+    A2 = A1;
+    getTimeQuickSort(A1);
+    getTimeSTDSort(A2);
+
+    vector<int> B1;
+    vector<int> B2;
+    generateVector(B1, 100000000);
+    B2 = B1;
+    getTimeQuickSort(B1);
+    getTimeSTDSort(B2);
 }
